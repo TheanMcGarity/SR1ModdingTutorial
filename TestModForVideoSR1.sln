@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestModForVideoSR1", "TestModForVideoSR1.csproj", "{3BBE6B92-27EF-46B5-9781-69A75169100A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BBE6B92-27EF-46B5-9781-69A75169100A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BBE6B92-27EF-46B5-9781-69A75169100A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BBE6B92-27EF-46B5-9781-69A75169100A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BBE6B92-27EF-46B5-9781-69A75169100A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
