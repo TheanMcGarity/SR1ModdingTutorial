@@ -3,17 +3,10 @@ using SRML;
 using SRML.Utils.Enum;
 using UnityEngine;
 using Library = ShortcutLib.Shortcut;
-using static TestModForVideoSR1.CustomIds;
+using static TestModForVideoSR1.CustomIDs;
 namespace TestModForVideoSR1
 {
-    public static class ColorToFloatExtensions { public static Color GetFloatVersion(this Color32 color) => new Color(color.r / 255, color.g / 255, color.b / 255, color.a / 255); }
     
-    [EnumHolder]
-    public class CustomIds
-    {
-        public static readonly Identifiable.Id TEST_SLIME;
-        public static readonly Identifiable.Id TEST_PLORT;
-    }
 
     public class EntryPoint : ModEntryPoint
     {

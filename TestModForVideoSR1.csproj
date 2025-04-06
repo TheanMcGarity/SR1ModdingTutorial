@@ -431,6 +431,8 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="ColorToFloatExtensions.cs" />
+        <Compile Include="CustomIDs.cs" />
         <Compile Include="EntryPoint.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
