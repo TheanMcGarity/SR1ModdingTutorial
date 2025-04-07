@@ -1,5 +1,8 @@
-﻿using AssetsLib;
+﻿using System;
+using System.Collections.Generic;
+using AssetsLib;
 using SRML;
+using SRML.SR;
 using SRML.Utils.Enum;
 using TestModForVideoSR1.SlimeBehaviors;
 using UnityEngine;
@@ -11,7 +14,11 @@ namespace TestModForVideoSR1
 
     public class EntryPoint : ModEntryPoint
     {
-        public override void PreLoad() => HarmonyInstance.PatchAll();
+        public override void PreLoad()
+        {
+            PreloadLargos(TEST_SLIME);
+            HarmonyInstance.PatchAll();
+        }
 
         public override void Load()
         {
@@ -46,8 +53,11 @@ namespace TestModForVideoSR1
             
         }
 
-        
-        
+        public override void PostLoad()
+        {
+            CreateLargos(TEST_SLIME);
+        }
+
         public static void CreateSlimeAndPlort(
             Identifiable.Id newSlimeID,
             Identifiable.Id newPlortID,
@@ -117,5 +127,51 @@ namespace TestModForVideoSR1
             slimeDef.Diet.Favorites = favoriteFoods;
             slimeDef.Diet.MajorFoodGroups = foodGroups;
         }
+
+        public const SlimeRegistry.LargoProps DEFAULT_PROPS = SlimeRegistry.LargoProps.RECOLOR_BASE_MAT_AS_SLIME1 |
+                                                              SlimeRegistry.LargoProps.RECOLOR_SLIME2_ADDON_MATS |
+                                                              SlimeRegistry.LargoProps.INHERIT_STRIPE_FROM_SLIME2;
+        public static void CreateLargos(Identifiable.Id moddedID, SlimeRegistry.LargoProps props = DEFAULT_PROPS)
+        {
+            foreach (var slime in Identifiable.SLIME_CLASS)
+            {
+                try
+                {
+                    var largo = largos[moddedID][slime];
+                    Library.Largo.CreateLargo($"{moddedID.ToString().Split('_')[0].ToTitleCase()} {slime.ToString().Split('_')[0].ToTitleCase()} Largo",
+                        moddedID,
+                        slime,
+                        largo,
+                        0.5f,
+                        1,
+                        props);
+                    
+                    Identifiable.LARGO_CLASS.Add(largo);
+                }
+                catch { }
+                
+            }
+        }
+        public static void PreloadLargos(Identifiable.Id moddedID)
+        {
+            var dict = new Dictionary<Identifiable.Id, Identifiable.Id>();
+            foreach (var slime in Identifiable.SLIME_CLASS)
+            {
+                try
+                {
+                    var largo = EnumPatcher.AddEnumValue<Identifiable.Id>(
+                        moddedID.ToString().Split('_')[0] +
+                        "_" +
+                        slime.ToString().Split('_')[0] +
+                        "_LARGO"
+                    );
+                    dict.Add(slime, largo);
+                }
+                catch { }
+            }        
+            largos.Add(moddedID, dict);
+        }
+
+        public static Dictionary<Identifiable.Id, Dictionary<Identifiable.Id, Identifiable.Id>> largos = new Dictionary<Identifiable.Id, Dictionary<Identifiable.Id, Identifiable.Id>>();
     }
 }
