@@ -1,6 +1,7 @@
 ﻿using AssetsLib;
 using SRML;
 using SRML.Utils.Enum;
+using TestModForVideoSR1.SlimeBehaviors;
 using UnityEngine;
 using Library = ShortcutLib.Shortcut;
 using static TestModForVideoSR1.CustomIDs;
@@ -40,6 +41,9 @@ namespace TestModForVideoSR1
                 out var plortOBJ,
                 out var slimeAPP,
                 out var slimeDEF);
+
+            slimeOBJ.AddComponent<FlingOnTouchBehavior>();
+            
         }
 
         

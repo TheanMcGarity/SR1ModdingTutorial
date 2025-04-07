@@ -435,6 +435,7 @@
         <Compile Include="CustomIDs.cs" />
         <Compile Include="EntryPoint.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="SlimeBehaviors\FlingOnTouchBehavior.cs" />
     </ItemGroup>
     <ItemGroup>
       <EmbeddedResource Include="modinfo.json" />
