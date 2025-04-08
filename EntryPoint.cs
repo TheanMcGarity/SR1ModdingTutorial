@@ -51,10 +51,32 @@ namespace TestModForVideoSR1
 
             slimeOBJ.AddComponent<FlingOnTouchBehavior>();
             
+            
         }
 
         public override void PostLoad()
         {
+            CreateGordo(
+                TEST_GORDO,
+                TEST_SLIME,
+                Identifiable.Id.PINK_GORDO,
+                "Test Gordo",
+                Color.green,
+                Color.green,
+                Color.green,
+                "",
+                ZoneDirector.Zone.RANCH,
+                15,
+                new List<GameObject>(),
+                out var gordoDEF,
+                out var gordoOBJ);
+
+            SRCallbacks.PreSaveGameLoaded += sceneContext =>
+            {
+                var gordo = SRBehaviour.InstantiateDynamic(gordoOBJ, new Vector3(53.9358f, 12.33f, -98.78f), Quaternion.Euler(0f, 150.0974f, 0f));
+                sceneContext.GameModel.RegisterGordo("testGordo", gordo);
+            };
+            
             CreateLargos(TEST_SLIME);
         }
 
@@ -172,6 +194,48 @@ namespace TestModForVideoSR1
             largos.Add(moddedID, dict);
         }
 
+        public static void CreateGordo(
+            Identifiable.Id newGordoID,
+            Identifiable.Id baseSlimeID,
+            Identifiable.Id gordoPrefabID,
+            string gordoName,
+            Color32 topColor,
+            Color32 middleColor,
+            Color32 bottomColor,
+            string mapIconPNGName,
+            ZoneDirector.Zone zone,
+            int targetEatCount,
+            List<GameObject> popRewards,
+            out SlimeDefinition gordoDef,
+            out GameObject gordoObject)
+        {
+            
+            Sprite tex = null;
+            if (!string.IsNullOrEmpty(mapIconPNGName))
+                tex = TextureUtils.CreateSprite(TextureUtils.LoadImage(mapIconPNGName));
+            
+            var gordo = Library.Slime.CreateGordo(
+                gordoPrefabID,
+                baseSlimeID,
+                newGordoID,
+                tex,
+                gordoName,
+                gordoName,
+                zone,
+                targetEatCount,
+                popRewards);
+            
+            gordoObject = gordo.Item2;
+            gordoDef = gordo.Item1;
+
+            foreach (var renderer in gordoObject.GetComponentsInChildren<SkinnedMeshRenderer>())
+            {
+                renderer.material.SetColor("_TopColor", topColor);
+                renderer.material.SetColor("_MiddleColor", middleColor);
+                renderer.material.SetColor("_BottomColor", bottomColor);
+            }
+        }
+        
         public static Dictionary<Identifiable.Id, Dictionary<Identifiable.Id, Identifiable.Id>> largos = new Dictionary<Identifiable.Id, Dictionary<Identifiable.Id, Identifiable.Id>>();
     }
 }
